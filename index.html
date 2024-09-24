@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset=" UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Discord</title>
+    <style>
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp1839579.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .title {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .webhook-url {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .webhook-url:focus {
+            outline: none;
+            border: 1px solid #fff;
+        }
+        
+        .username {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .username:focus {
+            outline: none;
+            border: 1px solid #fff;
+        }
+        
+        .webhook-message {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .webhook-message:focus {
+            outline: none;
+            border: 1px solid #fff;
+        }
+        
+        .send-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .send-button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Webhook Discord</h2>
+        <input type="text" class="username" id="username" placeholder="Entrez votre nom d'utilisateur">
+        <input type="text" class="webhook-url" id="webhook-url" placeholder="Entrez l'URL de votre webhook">
+        <textarea class="webhook-message" id="webhook-message" placeholder="Entrez votre message"></textarea>
+        <button class="send-button" id="send-button">Envoyer</button>
+    </div>
+    
+    <script>
+        const webhookUrlInput = document.getElementById('webhook-url');
+        const webhookMessageInput = document.getElementById('webhook-message');
+        const usernameInput = document.getElementById('username');
+        const sendButton = document.getElementById('send-button');
+        
+        sendButton.addEventListener('click', () => {
+            const webhookUrl = webhookUrlInput.value;
+            const webhookMessage = webhookMessageInput.value;
+            const username = usernameInput.value;
+            
+            if (webhookUrl && webhookMessage && username) {
+                const data = {
+                    username: username,
+                    content: webhookMessage
+                };
+                
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+            } else {
+                alert('Veuillez entrer votre nom d\'utilisateur, l\'URL de votre webhook et votre message');
+            }
+        });
+    </script>
+</body>
+</html>
